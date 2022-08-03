@@ -196,7 +196,7 @@ func Invite(c *gin.Context) {
 			msg,
 		)
 		c.JSON(http.StatusOK, gin.H{
-			"message": "邀請人數+1!",
+			"message": "邀請人數+1!!",
 		})
 
 	}
