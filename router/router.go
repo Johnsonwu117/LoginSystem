@@ -1,7 +1,7 @@
 package routers
 
 import (
-	"LoginSystem/apis"
+	"LoginSystem/router/apis"
 
 	"github.com/gin-gonic/gin"
 )
