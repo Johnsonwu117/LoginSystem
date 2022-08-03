@@ -14,4 +14,5 @@ func AddUserRouter(r *gin.RouterGroup) {
 	user.POST("/change", apis.Changefile)
 	user.POST("/invite", apis.Invite)
 	//user.PUT("/:UserName", apis.UpdateList)
+	//user.PUT("/:UserName", apis.UpdateList)
 }
