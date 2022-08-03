@@ -3,11 +3,11 @@ package apis
 //變更測試
 import (
 	db "LoginSystem/database"
+	"LoginSystem/models/mails"
 	"fmt"
 	"math/rand"
 	"net/http"
 	"net/smtp"
-
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -50,31 +50,12 @@ func randSeq1(n int) string {
 
 //1.狀態(尚未驗證):寄信跟驗證碼
 func Snadmail(c *gin.Context) {
-	var (
-		host     = "smtp.gmail.com:587"
-		username = "jo890117jo890117@gmail.com"
-		password = "jo890117"
-	)
-
-	var user User
-
+	user := mails.User{}
 	c.BindJSON(&user)
-
-	auth := smtp.PlainAuth(host, username, password, "smtp.gmail.com")
-
-	to := []string{user.Email}
-	vfcode := (randSeq(8))
-	str := fmt.Sprintf("From:jo890117jo890117@gmail.com\r\nTo:%v\r\nSubject:信箱驗證碼\r\n\r\n親愛的會員你好:\r\n\r\n感謝你註冊會員，以下為你的驗證碼:\r\n\r\n這是你的安全驗證碼:%08v\r\n\r\n此驗證碼僅用於註冊，請勿將驗證碼洩漏給其他人。\r\n\r\n這是你的會員資料:%v\r\n\r\n%v\r\n", user.Email, vfcode, user.Email, user.Name)
-	msg := []byte(str)
-	smtp.SendMail(
-		host,
-		auth,
-		username,
-		to,
-		msg,
-	)
-
-	db.DB.Create(&user).Table("users").Save(map[string]interface{}{"Verifycode": vfcode, "State": "尚未驗證"})
+	mails.CreateFirst(user)
+	c.JSON(http.StatusOK, gin.H{
+		"訊息": "恭喜註冊成功",
+	})
 
 }
 
