@@ -22,12 +22,12 @@ type User struct {
 	Introduction string `json:"introduction"`
 }
 
+var letters = []rune("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
 var (
 	host     = "smtp.gmail.com:587"
 	username = "jo890117jo890117@gmail.com"
 	password = "jo890117"
 )
-var letters = []rune("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
 
 func randSeq(n int) string {
 	b := make([]rune, n)

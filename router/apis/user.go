@@ -2,8 +2,10 @@ package apis
 
 //變更測試
 import (
+	"LoginSystem/app/models/cheak"
+	"LoginSystem/app/models/login"
+	"LoginSystem/app/models/mails"
 	db "LoginSystem/database"
-	"LoginSystem/models/mails"
 	"fmt"
 	"math/rand"
 	"net/http"
@@ -29,15 +31,6 @@ type User struct {
 
 var letters = []rune("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
 
-func randSeq(n int) string {
-	b := make([]rune, n)
-	r := rand.New(rand.NewSource(time.Now().UnixNano()))
-	for i := range b {
-		b[i] = letters[r.Intn(62)]
-	}
-
-	return string(b)
-}
 func randSeq1(n int) string {
 	b := make([]rune, n)
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
@@ -48,7 +41,7 @@ func randSeq1(n int) string {
 	return string(b)
 }
 
-//1.狀態(尚未驗證):寄信跟驗證碼
+//狀態(尚未驗證):寄信跟驗證碼
 func Snadmail(c *gin.Context) {
 	user := mails.User{}
 	c.BindJSON(&user)
@@ -59,53 +52,31 @@ func Snadmail(c *gin.Context) {
 
 }
 
-//1-2.狀態(尚未驗證):寄信跟驗證碼<驗證api>
+//狀態(尚未驗證):寄信跟驗證碼<驗證api>
 func Cheakvfcode(c *gin.Context) {
-	var user, user_input User
+	user_input := cheak.User{}
 	c.BindJSON(&user_input)
-	db.DB.Table("users").Where("Email = ?", user_input.Email).Find(&user)
-	if user.Verifycode == user_input.Verifycode {
-		db.DB.Save(&user_input).Table("users").Save(map[string]interface{}{"State": "驗證完成"})
-		c.JSON(http.StatusOK, gin.H{
-			"message": "已成功驗證!",
-		})
-	} else {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "已失敗驗證!",
-		})
-	}
+	cheak.CheakVertify(user_input)
+	c.JSON(http.StatusOK, gin.H{
+		"訊息": "兌換成功",
+	})
 
 }
 
-//2.狀態(尚未註冊):填寫密碼
+//狀態(尚未註冊):填寫密碼
 
 func Logincode(c *gin.Context) {
 
-	var user, user_input User
+	user_input := login.User{}
 	c.BindJSON(&user_input)
-	db.DB.Table("users").Where("Email = ?", user_input.Email).Find(&user)
-
-	if user.Verifycode == user_input.Verifycode {
-		if user_input.Password == user_input.Twopassword {
-			c.JSON(http.StatusOK, gin.H{
-				"message": &user_input,
-			})
-			db.DB.Save(&user_input).Table("users").Save(map[string]interface{}{"State": "登陸完成"})
-		} else {
-			c.JSON(http.StatusOK, gin.H{
-				"message": "兩次密碼輸入不一樣!",
-			})
-		}
-
-	} else {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "驗證碼錯誤哦!",
-		})
-	}
+	login.LoginPassWord(user_input)
+	c.JSON(http.StatusOK, gin.H{
+		"訊息": "兌換成功",
+	})
 
 }
 
-//3.狀態(修改資料):寄新的驗證碼信 ，先驗證他的驗證碼
+//狀態(修改資料):寄新的驗證碼信 ，先驗證他的驗證碼
 func Changefile(c *gin.Context) {
 
 	var user, user_input User
@@ -149,7 +120,7 @@ func Changefile(c *gin.Context) {
 
 }
 
-//4.填寫邀請碼
+//填寫邀請碼
 func Invite(c *gin.Context) {
 	var user, user_input User
 	var (
