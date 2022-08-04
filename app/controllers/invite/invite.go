@@ -9,7 +9,7 @@ import (
 
 var (
 	host     = "smtp.gmail.com:587"
-	username = "jo890117jo890117@gmail.com"
+	username = "************@gmail.com"
 	password = "*****"
 )
 
