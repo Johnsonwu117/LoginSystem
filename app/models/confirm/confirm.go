@@ -1,4 +1,4 @@
-package cheak
+package confirm
 
 import (
 	db "LoginSystem/database"

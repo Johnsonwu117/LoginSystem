@@ -40,9 +40,9 @@ func Snadmail(c *gin.Context) {
 
 //狀態(尚未驗證):寄信跟驗證碼<驗證api>
 func Cheakvfcode(c *gin.Context) {
-	user_input := cheak.User{}
+	user_input := confirm.User{}
 	c.BindJSON(&user_input)
-	cheak.CheakVertify(user_input)
+	confirm.CheakVertify(user_input)
 	c.JSON(http.StatusOK, gin.H{
 		"訊息": "驗證成功",
 	})
