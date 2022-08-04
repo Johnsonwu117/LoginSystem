@@ -1,26 +1,13 @@
 package mails
 
 import (
+	"LoginSystem/app/controllers/mail"
 	db "LoginSystem/database"
 	"fmt"
 	"math/rand"
 	"net/smtp"
 	"time"
 )
-
-type User struct {
-	Id           int    `json:"UserId" form:"id"`
-	Name         string `json:"UserName" form:"name"`
-	Password     string `json:"UserPassword" form:"password"`
-	Twopassword  string `json:"UserPasswordCheak" form:"twopassword"`
-	Email        string `json:"UserEmail" form:"email"`
-	Verifycode   string `json:"verifycode"`
-	Invitecode   string `json:"invitecode"`
-	Invitenum    int    `json:"invitenum"`
-	State        string `json:"state"`
-	Phone        string `json:"phone"`
-	Introduction string `json:"introduction"`
-}
 
 var letters = []rune("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
 
@@ -40,7 +27,7 @@ func randSeq(n int) string {
 	return string(b)
 }
 
-func CreateFirst(user User) User {
+func CreateFirst(user mail.User) mail.User {
 	incode := (randSeq(8))
 	db.DB.Create(&user).Table("users").Save(map[string]interface{}{"Invitecode": incode})
 	auth := smtp.PlainAuth(host, username, password, "smtp.gmail.com")

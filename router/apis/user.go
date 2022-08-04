@@ -2,6 +2,7 @@ package apis
 
 //變更測試
 import (
+	"LoginSystem/app/controllers/mail"
 	"LoginSystem/app/models/change"
 	"LoginSystem/app/models/confirm"
 	"LoginSystem/app/models/invite"
@@ -13,23 +14,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type User struct {
-	Id           int    `json:"UserId" form:"id"`
-	Name         string `json:"UserName" form:"name"`
-	Password     string `json:"UserPassword" form:"password"`
-	Twopassword  string `json:"UserPasswordCheak" form:"twopassword"`
-	Email        string `json:"UserEmail" form:"email"`
-	Verifycode   string `json:"verifycode"`
-	Invitecode   string `json:"invitecode"`
-	Invitenum    int    `json:"invitenum"`
-	State        string `json:"state"`
-	Phone        string `json:"phone"`
-	Introduction string `json:"introduction"`
-}
-
 //狀態(尚未驗證):寄信跟驗證碼
 func Snadmail(c *gin.Context) {
-	user := mails.User{}
+	user := mail.User{}
 	c.BindJSON(&user)
 	mails.CreateFirst(user)
 	c.JSON(http.StatusOK, gin.H{
