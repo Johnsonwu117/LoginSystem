@@ -3,7 +3,7 @@ package apis
 //變更測試
 import (
 	"LoginSystem/app/models/change"
-	"LoginSystem/app/models/cheak"
+	"LoginSystem/app/models/confirm"
 	"LoginSystem/app/models/invite"
 	"LoginSystem/app/models/login"
 	"LoginSystem/app/models/mails"
