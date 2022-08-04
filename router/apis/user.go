@@ -44,7 +44,7 @@ func Cheakvfcode(c *gin.Context) {
 	c.BindJSON(&user_input)
 	cheak.CheakVertify(user_input)
 	c.JSON(http.StatusOK, gin.H{
-		"訊息": "兌換成功",
+		"訊息": "驗證成功",
 	})
 
 }
@@ -57,7 +57,7 @@ func Logincode(c *gin.Context) {
 	c.BindJSON(&user_input)
 	login.LoginPassWord(user_input)
 	c.JSON(http.StatusOK, gin.H{
-		"訊息": "兌換成功",
+		"訊息": "登入成功",
 	})
 
 }
@@ -69,7 +69,7 @@ func Changefile(c *gin.Context) {
 	c.BindJSON(&user_input)
 	change.Change(user_input)
 	c.JSON(http.StatusOK, gin.H{
-		"訊息": "兌換成功",
+		"訊息": "修改資料成功",
 	})
 
 }
@@ -80,6 +80,6 @@ func Invite(c *gin.Context) {
 	c.BindJSON(&user_input)
 	invite.InviteMember(user_input)
 	c.JSON(http.StatusOK, gin.H{
-		"訊息": "兌換成功",
+		"訊息": "填寫邀請碼成功",
 	})
 }

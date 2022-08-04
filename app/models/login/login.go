@@ -25,7 +25,7 @@ func LoginPassWord(user_input User) User {
 	if user.Verifycode == user_input.Verifycode {
 		if user_input.Password == user_input.Twopassword {
 
-			db.DB.Save(&user_input).Table("users").Save(map[string]interface{}{"State": "登陸完成"})
+			db.DB.Save(&user_input).Table("users").Save(map[string]interface{}{"State": "登入完成"})
 		}
 	}
 	return user_input
