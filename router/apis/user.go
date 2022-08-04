@@ -2,12 +2,16 @@ package apis
 
 //變更測試
 import (
-	"LoginSystem/app/controllers/mail"
-	"LoginSystem/app/models/change"
-	"LoginSystem/app/models/confirm"
-	"LoginSystem/app/models/invite"
-	"LoginSystem/app/models/login"
-	"LoginSystem/app/models/mails"
+	"LoginSystem/app/controllers/change"
+	"LoginSystem/app/controllers/confirm"
+	"LoginSystem/app/controllers/invite"
+	"LoginSystem/app/controllers/login"
+	"LoginSystem/app/controllers/mails"
+	"LoginSystem/app/models/changes"
+	"LoginSystem/app/models/confirms"
+	"LoginSystem/app/models/invites"
+	"LoginSystem/app/models/logins"
+	"LoginSystem/app/models/mail"
 
 	"net/http"
 
@@ -27,9 +31,9 @@ func Snadmail(c *gin.Context) {
 
 //狀態(尚未驗證):寄信跟驗證碼<驗證api>
 func Cheakvfcode(c *gin.Context) {
-	user_input := confirm.User{}
+	user_input := confirms.User{}
 	c.BindJSON(&user_input)
-	confirm.CheakVertify(user_input)
+	confirm.ConfirmVertify(user_input)
 	c.JSON(http.StatusOK, gin.H{
 		"訊息": "驗證成功",
 	})
@@ -40,7 +44,7 @@ func Cheakvfcode(c *gin.Context) {
 
 func Logincode(c *gin.Context) {
 
-	user_input := login.User{}
+	user_input := logins.User{}
 	c.BindJSON(&user_input)
 	login.LoginPassWord(user_input)
 	c.JSON(http.StatusOK, gin.H{
@@ -52,7 +56,7 @@ func Logincode(c *gin.Context) {
 //狀態(修改資料):寄新的驗證碼信 ，先驗證他的驗證碼
 func Changefile(c *gin.Context) {
 
-	user_input := change.User{}
+	user_input := changes.User{}
 	c.BindJSON(&user_input)
 	change.Change(user_input)
 	c.JSON(http.StatusOK, gin.H{
@@ -63,7 +67,7 @@ func Changefile(c *gin.Context) {
 
 //填寫邀請碼
 func Invite(c *gin.Context) {
-	user_input := invite.User{}
+	user_input := invites.User{}
 	c.BindJSON(&user_input)
 	invite.InviteMember(user_input)
 	c.JSON(http.StatusOK, gin.H{

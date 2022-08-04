@@ -1,8 +1,4 @@
-package login
-
-import (
-	db "LoginSystem/database"
-)
+package logins
 
 type User struct {
 	Id           int    `json:"UserId" form:"id"`
@@ -16,17 +12,4 @@ type User struct {
 	State        string `json:"state"`
 	Phone        string `json:"phone"`
 	Introduction string `json:"introduction"`
-}
-
-func LoginPassWord(user_input User) User {
-	var user User
-	db.DB.Table("users").Where("Email = ?", user_input.Email).Find(&user)
-
-	if user.Verifycode == user_input.Verifycode {
-		if user_input.Password == user_input.Twopassword {
-
-			db.DB.Save(&user_input).Table("users").Save(map[string]interface{}{"State": "登入完成"})
-		}
-	}
-	return user_input
 }

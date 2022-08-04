@@ -1,5 +1,4 @@
-package mail
-
+package changes
 type User struct {
 	Id           int    `json:"UserId" form:"id"`
 	Name         string `json:"UserName" form:"name"`

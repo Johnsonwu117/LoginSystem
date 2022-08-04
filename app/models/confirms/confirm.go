@@ -1,9 +1,4 @@
-package confirm
-
-import (
-	db "LoginSystem/database"
-)
-
+package confirms
 type User struct {
 	Id           int    `json:"UserId" form:"id"`
 	Name         string `json:"UserName" form:"name"`
@@ -17,15 +12,3 @@ type User struct {
 	Phone        string `json:"phone"`
 	Introduction string `json:"introduction"`
 }
-
-func CheakVertify(user_input User) User {
-	var user User
-	db.DB.Table("users").Where("Email = ?", user_input.Email).Find(&user)
-	if user.Verifycode == user_input.Verifycode {
-		db.DB.Save(&user_input).Table("users").Save(map[string]interface{}{"State": "驗證完成"})
-	}
-	return user_input
-}
-
-// marge test
-// 看發生什麼事情

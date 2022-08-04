@@ -1,24 +1,11 @@
 package invite
 
 import (
+	"LoginSystem/app/models/invites"
 	db "LoginSystem/database"
 	"fmt"
 	"net/smtp"
 )
-
-type User struct {
-	Id           int    `json:"UserId" form:"id"`
-	Name         string `json:"UserName" form:"name"`
-	Password     string `json:"UserPassword" form:"password"`
-	Twopassword  string `json:"UserPasswordCheak" form:"twopassword"`
-	Email        string `json:"UserEmail" form:"email"`
-	Verifycode   string `json:"verifycode"`
-	Invitecode   string `json:"invitecode"`
-	Invitenum    int    `json:"invitenum"`
-	State        string `json:"state"`
-	Phone        string `json:"phone"`
-	Introduction string `json:"introduction"`
-}
 
 var (
 	host     = "smtp.gmail.com:587"
@@ -26,8 +13,8 @@ var (
 	password = "jo890117"
 )
 
-func InviteMember(user_input User) User {
-	var user User
+func InviteMember(user_input invites.User) invites.User {
+	var user invites.User
 	db.DB.Table("users").Where(" Invitecode= ?", user_input.Invitecode).Find(&user)
 	if user.Invitecode == user_input.Invitecode {
 
