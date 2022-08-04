@@ -11,7 +11,7 @@ import (
 var (
 	Host     = "smtp.gmail.com:587"
 	Username = "jo890117jo890117@gmail.com"
-	Password = "jo890117"
+	Password = "*****"
 )
 
 func Change(user_input changes.User) changes.User {

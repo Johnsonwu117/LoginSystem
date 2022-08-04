@@ -10,7 +10,7 @@ import (
 var (
 	host     = "smtp.gmail.com:587"
 	username = "jo890117jo890117@gmail.com"
-	password = "jo890117"
+	password = "*****"
 )
 
 func InviteMember(user_input invites.User) invites.User {
